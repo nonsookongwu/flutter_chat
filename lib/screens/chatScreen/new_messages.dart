@@ -28,7 +28,8 @@ class _NewMessagesState extends State<NewMessages> {
     }
 
     FocusScope.of(context).unfocus(); 
-    _messageController.clear();//closes any keyboard that is open
+    _messageController.clear();
+    // print(enteredMessage);//closes any keyboard that is open
 
     final user = FirebaseAuth.instance.currentUser!;
 
@@ -36,6 +37,11 @@ class _NewMessagesState extends State<NewMessages> {
         .collection("users")
         .doc(user.uid)
         .get();
+
+// print("userData is ${userData.data()}");
+        if(userData.data() == null){
+          return;
+        } 
 
     FirebaseFirestore.instance.collection("chat").add({
       "text": enteredMessage,
